@@ -1,36 +1,29 @@
 package main
 
 import (
-	"fmt"
-	"math/big"
-	"strings"
+  "fmt"
+  "math/big"
+  "os"
+  "strings"
 )
 
-func main() {
-	fmt.Println("Enter hex number or 'stop' to exit:")
-
-	var input string
-
-	for {
-		fmt.Scanln(&input)
-
-		input = strings.ToLower(input)
-
-		if input == "stop" {
-			break
-		}
-
-		i := new(big.Int)
-
-		if _, ok := i.SetString(processHex(input), 16); !ok {
-			fmt.Println("Invailed hexdecimal number!")
-			continue
-		}
-
-		fmt.Println(i)
-	}
+func processHex(hexStr string) string {
+  return strings.TrimPrefix(hexStr, "0x")
 }
 
-func processHex(hexStr string) string {
-	return strings.TrimPrefix(hexStr, "0x")
+func main() {
+  if len(os.Args) == 2 {
+    inputHexNumber := os.Args[1]
+    inputHexNumber = strings.ToLower(inputHexNumber)
+
+    i := new(big.Int)
+
+    if _, ok := i.SetString(processHex(inputHexNumber), 16); !ok {
+      fmt.Println("Invailed hexdecimal number!")
+    }
+
+    fmt.Println(i)
+  } else {
+    fmt.Println("usage:", os.Args[0], "[0xYournumber]")
+  }
 }
