@@ -1,3 +1,3 @@
-module hex_to_dec
+module hex-to-dec
 
 go 1.23.1
